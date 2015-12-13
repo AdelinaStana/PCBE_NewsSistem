@@ -32,52 +32,48 @@ public class Reader implements javax.jms.MessageListener , Runnable {
         InitialContext jndi;
         
 		try {
-			jndi = new InitialContext(env);
-
-
-        // Look up a JMS connection factory
-        TopicConnectionFactory conFactory =
-        (TopicConnectionFactory)jndi.lookup("TopicConnectionFactory");
-
-        // Create a JMS connection
-        TopicConnection connection =
-        conFactory.createTopicConnection();
-
-        // Create two JMS session objects
-        TopicSession pubSession =
-        connection.createTopicSession(false,
-                                      Session.AUTO_ACKNOWLEDGE);
-        TopicSession subSession =
-        connection.createTopicSession(false,
-                                      Session.AUTO_ACKNOWLEDGE);
-
-		} catch (NamingException e1) {
+			jndi = new InitialContext();
+	
+	
+	        // Look up a JMS connection factory
+	        TopicConnectionFactory conFactory =
+	        (TopicConnectionFactory)jndi.lookup("TopicConnectionFactory");
+	
+	        
+	        // Create a JMS connection
+	        TopicConnection connection =
+	        conFactory.createTopicConnection();	 
+	
+	        // Create two JMS session objects
+	        TopicSession pubSession =
+	        connection.createTopicSession(false,
+	                                      Session.AUTO_ACKNOWLEDGE);
+	        TopicSession subSession =
+	        connection.createTopicSession(false,
+	                                      Session.AUTO_ACKNOWLEDGE);
+			
+	        // Create a JMS publisher and subscriber
+	//        TopicPublisher publisher = 
+	//            pubSession.createPublisher(chatTopic);
+	//        TopicSubscriber subscriber = 
+	//            subSession.createSubscriber(chatTopic);
+	
+	        // Set a JMS message listener
+	       // subscriber.setMessageListener(this);
+	
+	        // Intialize the Chat application
+	        set(connection, pubSession, subSession, publisher);
+			
+	        connection.start();
+		}
+        catch (JMSException e) {
+			e.printStackTrace();
+		}
+		catch (NamingException e1) {
 			e1.printStackTrace();
 		}
-       catch (JMSException e) {
-			e.printStackTrace();
-		}
 
-        // Create a JMS publisher and subscriber
-//        TopicPublisher publisher = 
-//            pubSession.createPublisher(chatTopic);
-//        TopicSubscriber subscriber = 
-//            subSession.createSubscriber(chatTopic);
-
-        // Set a JMS message listener
-       // subscriber.setMessageListener(this);
-
-        // Intialize the Chat application
-        set(connection, pubSession, subSession, publisher);
-		
-		  
-        try {
-			connection.start( );
-		} catch (JMSException e) {
-			e.printStackTrace();
-		}
-	
-
+        
 	}
 	 /* Initialize the instance variables */
     public void set(TopicConnection con, TopicSession pubSess,
