@@ -99,7 +99,7 @@ private static JPanel initOptionsPane() {
             	 int result = JOptionPane.showConfirmDialog(null, fields, "Edit Topic", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
             	 switch (result) {
             	     case JOptionPane.OK_OPTION:
-                         News news = new News(field1.getText(),field2.getText(),field3.getText(),name,field4.getText(),field5.getText());
+                         News news = new News(field1.getText(),field2.getText(),field3.getText(),name,field5.getText(),field6.getText());
             	        model.addElement(news);
                          break;
             	 }
@@ -137,6 +137,8 @@ newButton.addActionListener(new ActionListener() {
     	 JTextField field2 = new JTextField(10);
     	 JTextField field3 = new JTextField(10);
     	 JTextField field4 = new JTextField(10);
+    	 field4.setText(name);
+    	 field4.setEnabled(false);
     	 JTextField field5 = new JTextField(10);
     	 JTextField field6 = new JTextField(30);
     	 
@@ -155,7 +157,7 @@ newButton.addActionListener(new ActionListener() {
     	 int result = JOptionPane.showConfirmDialog(null, fields, "Edit Topic", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
     	 switch (result) {
     	     case JOptionPane.OK_OPTION:
-                 News news = new News(field1.getText(),field2.getText(),field3.getText(),name,field4.getText(),field5.getText());
+                 News news = new News(field1.getText(),field2.getText(),field3.getText(),name,field5.getText(),field6.getText());
                  model.addElement(news);
                  break;
     	 }
@@ -169,7 +171,8 @@ newButton.addActionListener(new ActionListener() {
    	 News selected = listNews.getSelectedValue();
    	 if(selected!=null)
    	 {
-   		 //more...
+     int index = listNews.getSelectedIndex();
+     ((DefaultListModel) listNews.getModel()).remove(index);
    	 JOptionPane.showMessageDialog(null, "Done!");
    	 }
    	 else
