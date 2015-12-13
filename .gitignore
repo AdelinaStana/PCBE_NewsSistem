@@ -2,3 +2,6 @@
 .classpath
 bin/*
 .settings/*
+/bin/*
+/bin
+bin/
