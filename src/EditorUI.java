@@ -18,7 +18,7 @@ public class EditorUI
    public static boolean connect = false;
    
    public final static EditorUI jchat = new EditorUI(name);
-   static DefaultListModel<News> model = new DefaultListModel<>();
+   static DefaultListModel<News> model = new DefaultListModel<>();;
    
    public static JFrame mainFrame =null;
    public static JTextField statusColor = null;
@@ -142,6 +142,8 @@ newButton.addActionListener(new ActionListener() {
     	 JTextField field2 = new JTextField(10);
     	 JTextField field3 = new JTextField(10);
     	 JTextField field4 = new JTextField(10);
+    	 field4.setText(name);
+    	 field4.setEnabled(false);
     	 JTextField field5 = new JTextField(10);
     	 JTextField field6 = new JTextField(30);
     	 
@@ -178,7 +180,8 @@ newButton.addActionListener(new ActionListener() {
    	 News selected = listNews.getSelectedValue();
    	 if(selected!=null)
    	 {
-   		 //more...
+     int index = listNews.getSelectedIndex();
+     ((DefaultListModel) listNews.getModel()).remove(index);
    	 JOptionPane.showMessageDialog(null, "Done!");
    	 }
    	 else
@@ -210,9 +213,8 @@ newButton.addActionListener(new ActionListener() {
      return optionsPane;
    }
 
-private static JList<News> createNewsList() {
+public static JList<News> createNewsList() {
     // create List model
-
     // add item to model
     model.addElement(new News("A", "A", "cpp","A",  "cpp","a"));
     model.addElement(new News("A", "A", "cpp","A", "V","a"));
