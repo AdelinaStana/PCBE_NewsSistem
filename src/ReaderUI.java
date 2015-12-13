@@ -98,7 +98,7 @@ private static JPanel initOptionsPane() {
         	 int result = JOptionPane.showConfirmDialog(null, fields, "Follow Topic", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
         	 switch (result) {
         	     case JOptionPane.OK_OPTION:
-        	         notifySubscribe(comboBox.getSelectedItem()+" : "+field.getText());
+        	         notifySubscribe(comboBox.getSelectedItem()+":"+field.getText());
         	         break;
         	 }
         	 

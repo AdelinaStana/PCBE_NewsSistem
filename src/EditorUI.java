@@ -1,6 +1,8 @@
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
@@ -24,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
@@ -35,13 +38,13 @@ public class EditorUI
    public static boolean connect = false;
    
    public final static EditorUI jchat = new EditorUI(name);
-   static DefaultListModel<News> model = new DefaultListModel<>();;
+   static ListModel<EditorNews> model = new DefaultListModel<>();
    
    public static JFrame mainFrame =null;
    public static JTextField statusColor = null;
    public static JTextField nameField = null;;
    public static JButton connectButton = null;
-   private static JList<News> listNews;
+   private static JList<EditorNews> listNews;
    private static List<EditorEvents> listeners;
 
 
@@ -55,13 +58,13 @@ public class EditorUI
        listeners.add(toAdd);
    }
 
-   public static void notifyAdd(News n) {
+   public static void notifyAdd(EditorNews n) {
    
        for (EditorEvents hl : listeners)
            hl.newsAdded(n);
    }
    
-   public static void notifyEdited(News n) {
+   public static void notifyEdited(EditorNews n) {
 
        for (EditorEvents hl : listeners)
            hl.newsEdited(n);
@@ -72,7 +75,7 @@ public class EditorUI
 	           hl.followRequest(string);
 	}
 	
-	private static void notifyDeleted(News n) {
+	private static void notifyDeleted(EditorNews n) {
 		for (EditorEvents hl : listeners)
 	           hl.newsDeleted(n);
 	}
@@ -103,7 +106,7 @@ private static JPanel initOptionsPane() {
      
      editButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-        	 News selected = listNews.getSelectedValue();
+        	 EditorNews selected = listNews.getSelectedValue();
         	 if(selected!=null)
         	 {
         		 JPanel fields = new JPanel(new GridLayout(7, 2));
@@ -148,11 +151,11 @@ private static JPanel initOptionsPane() {
             	 if(!(field1.getText().isEmpty()) && !(field2.getText().isEmpty()) && !(field3.getText().isEmpty()) && !(field5.getText().isEmpty()) && !(field6.getText().isEmpty())){
             	 switch (result) {
             	     case JOptionPane.OK_OPTION:
-                         News news = new News(field1.getText(),field2.getText(),field3.getText(),name,field5.getText(),field6.getText());
+                         EditorNews news = new EditorNews(field1.getText(),field2.getText(),field3.getText(),name,field5.getText(),field6.getText());
                          news.setDateCreated(d);
                          int index = listNews.getSelectedIndex();
                          ((DefaultListModel) listNews.getModel()).remove(index);
-                         model.add(index, news);
+                         ((Container) model).add(index, news);
                          notifyEdited(news);
                          break;
             	 }
@@ -165,7 +168,7 @@ private static JPanel initOptionsPane() {
      
      followButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-        	 News selected = listNews.getSelectedValue();
+        	 EditorNews selected = listNews.getSelectedValue();
         	 if(selected!=null)
         	 {
         	 notifyFollow("");	 
@@ -222,8 +225,8 @@ newButton.addActionListener(new ActionListener() {
     	 
     	 switch (result) {
     	     case JOptionPane.OK_OPTION:
-                 News news = new News(field1.getText(),field2.getText(),field3.getText(),name,field5.getText(),field6.getText());
-                 model.addElement(news);
+                 EditorNews news = new EditorNews(field1.getText(),field2.getText(),field3.getText(),name,field5.getText(),field6.getText());
+                 ((DefaultListModel<EditorNews>) model).addElement(news);
                  notifyAdd(news);
                  break;
     	 }
@@ -237,7 +240,7 @@ newButton.addActionListener(new ActionListener() {
 
   deleteButton.addActionListener(new ActionListener() {
     public void actionPerformed(ActionEvent e) {
-   	 News selected = listNews.getSelectedValue();
+   	 EditorNews selected = listNews.getSelectedValue();
    	 if(selected!=null)
    	 {
      int index = listNews.getSelectedIndex();
@@ -274,14 +277,14 @@ newButton.addActionListener(new ActionListener() {
      return optionsPane;
    }
 
-public static JList<News> createNewsList() {
+public static JList<EditorNews> createNewsList() {
     // create List model
     // add item to model
-    model.addElement(new News("A", "A", "cpp","A",  "cpp","a"));
-    model.addElement(new News("A", "A", "cpp","A", "V","a"));
-   
+    ((DefaultListModel<EditorNews>) model).addElement(new EditorNews("A", "A", "cpp","A",  "cpp","a"));
+    ((DefaultListModel<EditorNews>) model).addElement(new EditorNews("A", "A", "cpp","A", "V","a"));
+
     // create JList with model
-    JList<News> list = new JList<News>(model);
+    JList<EditorNews> list = new JList<EditorNews>(model);
     list.setCellRenderer(new NewsRenderer());
     
     return list;
