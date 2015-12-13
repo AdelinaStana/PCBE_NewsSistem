@@ -42,38 +42,38 @@ public class EditorUI
    public static JTextField nameField = null;;
    public static JButton connectButton = null;
    private static JList<News> listNews;
-   private static List<CustomeEventListener> listeners;
+   private static List<EditorEvents> listeners;
 
 
    public EditorUI(String name)
    {
     this.name = name ;
-   listeners = new ArrayList<CustomeEventListener>(); 
+   listeners = new ArrayList<EditorEvents>(); 
    }
 
-   public void addListener(CustomeEventListener toAdd) {
+   public void addListener(EditorEvents toAdd) {
        listeners.add(toAdd);
    }
 
    public static void notifyAdd(News n) {
    
-       for (CustomeEventListener hl : listeners)
+       for (EditorEvents hl : listeners)
            hl.newsAdded(n);
    }
    
    public static void notifyEdited(News n) {
 
-       for (CustomeEventListener hl : listeners)
+       for (EditorEvents hl : listeners)
            hl.newsEdited(n);
    }
    
 	private static void notifyFollow(String string) {
-		for (CustomeEventListener hl : listeners)
+		for (EditorEvents hl : listeners)
 	           hl.followRequest(string);
 	}
 	
 	private static void notifyDeleted(News n) {
-		for (CustomeEventListener hl : listeners)
+		for (EditorEvents hl : listeners)
 	           hl.newsDeleted(n);
 	}
 	

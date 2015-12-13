@@ -8,6 +8,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReaderUI
 {
@@ -22,12 +24,28 @@ public class ReaderUI
    public static JTextField nameField = null;;
    public static JButton connectButton = null;
    private static JList<News> listNews;
-
+   private static List<ReaderEvents> listeners;
 
    public ReaderUI()
    {
 
-	 
+	   listeners = new ArrayList<ReaderEvents>(); 
+   }
+
+   public void addListener(ReaderEvents toAdd) {
+       listeners.add(toAdd);
+   }
+
+   public static void notifySeen(News n) {
+   
+       for (ReaderEvents hl : listeners)
+           hl.seen(n);
+   }
+   
+   public static void notifySubscribe(String s) {
+
+       for (ReaderEvents hl : listeners)
+           hl.subscribeRequest(s);
    }
 
 private static JPanel initOptionsPane() {
@@ -61,9 +79,12 @@ private static JPanel initOptionsPane() {
         	 Image newimg = img.getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
         	 image = new ImageIcon(newimg); 
         	 JOptionPane.showMessageDialog(new JFrame(), selected.getContent(), selected.getTitle(), JOptionPane.INFORMATION_MESSAGE, image);
+        	 notifySeen(selected);
         	 }
         }
        });
+     
+     
      followButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
            
@@ -77,8 +98,7 @@ private static JPanel initOptionsPane() {
         	 int result = JOptionPane.showConfirmDialog(null, fields, "Follow Topic", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
         	 switch (result) {
         	     case JOptionPane.OK_OPTION:
-        	    	 System.out.println(comboBox.getSelectedItem());
-        	         System.out.println(field.getText());
+        	         notifySubscribe(comboBox.getSelectedItem()+" : "+field.getText());
         	         break;
         	 }
         	 

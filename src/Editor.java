@@ -2,7 +2,7 @@ import java.io.*;
 import java.net.*;
 
 
-public class Editor implements Runnable, CustomeEventListener {
+public class Editor implements Runnable, EditorEvents {
 
     private EditorUI edtUI ;
     private String name;

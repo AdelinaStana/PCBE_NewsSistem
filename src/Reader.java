@@ -6,7 +6,7 @@ import javax.naming.*;
 
 import java.util.Properties;
 
-public class Reader implements javax.jms.MessageListener , Runnable {
+public class Reader implements javax.jms.MessageListener , Runnable , ReaderEvents{
 
     private ReaderUI rdrUI ;
     private TopicSession pubSession;
@@ -25,6 +25,7 @@ public class Reader implements javax.jms.MessageListener , Runnable {
 		ReaderUI rdrUI = new ReaderUI();
 		rdrUI.start();
 
+		rdrUI.addListener(this);
 		Properties env = new Properties();
         // ... specify the JNDI properties specific to the vendor
 		
@@ -103,6 +104,18 @@ public class Reader implements javax.jms.MessageListener , Runnable {
         message.setText(text);
         publisher.publish(message);
     }
+
+	@Override
+	public void seen(News n) {
+	System.out.println("S");
+		
+	}
+
+	@Override
+	public void subscribeRequest(String s) {
+		// stringul vine gata creat de tip "x : y"
+		System.out.println("R");
+	}
 }
 
 
