@@ -9,7 +9,8 @@ public class News {
     private String subdomain;
     private String source;
     private String author;
-    private Date date;
+    private Date dateCreated;
+    private Date dateModified;
     private String title;
     private String content;
     
@@ -19,7 +20,8 @@ public class News {
         this.subdomain = subdomeniu;
         this.source = sursa;
         this.author =autor;
-        this.date = new Date();
+        this.dateCreated = new Date();
+        this.dateModified = new Date();
         this.title = titlu;
         this.content = continut;
 
@@ -53,9 +55,22 @@ public class News {
 		return this.author;
 	}
 
-	public String getDate() {
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+	
+	public String getDateCreateds() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		return dateFormat.format(date);
+		return dateFormat.format(dateCreated);
+	}	
+	
+	public void setDateCreated(Date datecreated){
+		this.dateCreated = datecreated;
+	}
+	
+	public String getDateModified() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		return dateFormat.format(dateModified);
 	}
 
 	public String getContent() {

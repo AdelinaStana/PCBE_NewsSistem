@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import java.util.Date;
 
 public class EditorUI
 {
@@ -17,7 +18,8 @@ public class EditorUI
    public static boolean connect = false;
    
    public final static EditorUI jchat = new EditorUI(name);
-
+   static DefaultListModel<News> model = new DefaultListModel<>();
+   
    public static JFrame mainFrame =null;
    public static JTextField statusColor = null;
    public static JTextField nameField = null;;
@@ -68,12 +70,15 @@ private static JPanel initOptionsPane() {
         		 JLabel lb5 = new JLabel("Title:");
         		 JLabel lb6 = new JLabel("Content:");
         		 
+        		 
+        		 
             	 JTextField field1 = new JTextField(10);
             	 JTextField field2 = new JTextField(10);
             	 JTextField field3 = new JTextField(10);
             	 JTextField field4 = new JTextField(10);
             	 JTextField field5 = new JTextField(10);
             	 JTextField field6 = new JTextField(30);
+ 
             	 field1.setText(selected.getDomain());
             	 field2.setText(selected.getSubdomain());
             	 field3.setText(selected.getSource());
@@ -81,7 +86,7 @@ private static JPanel initOptionsPane() {
             	 field4.setEnabled(false);
             	 field5.setText(selected.getTitle());
             	 field6.setText(selected.getContent());
-            	 
+            	 Date d = selected.getDateCreated();
             	 
             	 fields.add(lb1);
             	 fields.add(field1);
@@ -98,8 +103,9 @@ private static JPanel initOptionsPane() {
             	 int result = JOptionPane.showConfirmDialog(null, fields, "Edit Topic", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
             	 switch (result) {
             	     case JOptionPane.OK_OPTION:
-                         News news = new News(field1.getText(),field2.getText(),field3.getText(),name,field4.getText(),field5.getText());
-            	        
+                         News news = new News(field1.getText(),field2.getText(),field3.getText(),name,field5.getText(),field6.getText());
+                         news.setDateCreated(d);
+                         model.addElement(news);
                          break;
             	 }
             	 
@@ -139,6 +145,10 @@ newButton.addActionListener(new ActionListener() {
     	 JTextField field5 = new JTextField(10);
     	 JTextField field6 = new JTextField(30);
     	 
+    	 
+    	 field4.setText(name);
+    	 field4.setEnabled(false);
+    	 
     	 fields.add(lb1);
     	 fields.add(field1);
     	 fields.add(lb2);
@@ -154,8 +164,8 @@ newButton.addActionListener(new ActionListener() {
     	 int result = JOptionPane.showConfirmDialog(null, fields, "Edit Topic", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
     	 switch (result) {
     	     case JOptionPane.OK_OPTION:
-                 News news = new News(field1.getText(),field2.getText(),field3.getText(),name,field4.getText(),field5.getText());
-    	        
+                 News news = new News(field1.getText(),field2.getText(),field3.getText(),name,field5.getText(),field6.getText());
+                 model.addElement(news);
                  break;
     	 }
     	 
@@ -202,7 +212,7 @@ newButton.addActionListener(new ActionListener() {
 
 private static JList<News> createNewsList() {
     // create List model
-    DefaultListModel<News> model = new DefaultListModel<>();
+
     // add item to model
     model.addElement(new News("A", "A", "cpp","A",  "cpp","a"));
     model.addElement(new News("A", "A", "cpp","A", "V","a"));

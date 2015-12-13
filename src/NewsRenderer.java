@@ -21,7 +21,8 @@ public class NewsRenderer extends JPanel implements ListCellRenderer<News> {
     private JLabel lbSubdomeniu = new JLabel();
     private JLabel lbSursa = new JLabel();
     private JLabel lbTitlu = new JLabel();
-    private JLabel lbData= new JLabel();
+    private JLabel lbDataCreated= new JLabel();
+    private JLabel lbDataModified= new JLabel();
  
     public NewsRenderer() {
         setLayout(new BorderLayout(5, 5));
@@ -31,7 +32,8 @@ public class NewsRenderer extends JPanel implements ListCellRenderer<News> {
         panelText.add(lbSubdomeniu);
         panelText.add(lbSursa);
         panelText.add(lbAutor);
-        panelText.add(lbData);
+        panelText.add(lbDataCreated);
+        panelText.add(lbDataModified);
         panelText.add(lbTitlu);
         add(lbIcon, BorderLayout.WEST);
         add(panelText, BorderLayout.CENTER);
@@ -47,7 +49,8 @@ public class NewsRenderer extends JPanel implements ListCellRenderer<News> {
         lbSubdomeniu.setText("Subdomeniu : "+news.getSubdomain());
         lbSursa.setText("Sursa : "+news.getSource());
         lbAutor.setText("Autor : "+news.getAuthor());
-        lbData.setText("Data : "+news.getDate());
+        lbDataCreated.setText("Data publicarii : "+news.getDateCreateds());
+        lbDataModified.setText("Data modificarii: "+news.getDateModified());
         lbTitlu.setText("Titlul : "+news.getTitle());
         lbTitlu.setForeground(Color.blue);
         
@@ -56,7 +59,8 @@ public class NewsRenderer extends JPanel implements ListCellRenderer<News> {
         lbSubdomeniu.setOpaque(true);
         lbSursa.setOpaque(true);
         lbAutor.setOpaque(true);
-        lbData.setOpaque(true);
+        lbDataCreated.setOpaque(true);
+        lbDataModified.setOpaque(true);
         lbTitlu.setOpaque(true);
         
         if (isSelected) {
@@ -64,7 +68,8 @@ public class NewsRenderer extends JPanel implements ListCellRenderer<News> {
             lbSubdomeniu.setBackground(list.getSelectionBackground());
             lbSursa.setBackground(list.getSelectionBackground());
             lbAutor.setBackground(list.getSelectionBackground());
-            lbData.setBackground(list.getSelectionBackground());
+            lbDataCreated.setBackground(list.getSelectionBackground());
+            lbDataModified.setBackground(list.getSelectionBackground());
             lbTitlu.setBackground(list.getSelectionBackground());
             lbIcon.setBackground(list.getSelectionBackground());
             setBackground(list.getSelectionBackground());
@@ -73,7 +78,8 @@ public class NewsRenderer extends JPanel implements ListCellRenderer<News> {
             lbSubdomeniu.setBackground(list.getBackground());
             lbSursa.setBackground(list.getBackground());
             lbAutor.setBackground(list.getBackground());
-            lbData.setBackground(list.getBackground());
+            lbDataCreated.setBackground(list.getBackground());
+            lbDataModified.setBackground(list.getBackground());
             lbTitlu.setBackground(list.getBackground());
             lbIcon.setBackground(list.getBackground());
             setBackground(list.getBackground());
