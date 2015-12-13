@@ -1,10 +1,12 @@
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class News {
+public class News implements Serializable{
 	
+	private long id = System.currentTimeMillis() / 1000L;
 	private String domain;
     private String subdomain;
     private String source;
@@ -76,7 +78,8 @@ public class News {
 	public String getContent() {
 		return this.content;
 	}
- 
 
-
+	public String getId() {
+		return this.content;
+	}
 }

@@ -11,9 +11,7 @@ public class Reader implements javax.jms.MessageListener , Runnable , ReaderEven
     private ReaderUI rdrUI ;
     private TopicSession pubSession;
     private TopicSession subSession;
-    private TopicPublisher publisher;
     private TopicConnection connection;
-
     
     public Reader() { 
     	 new Thread( this ).start();
@@ -38,31 +36,15 @@ public class Reader implements javax.jms.MessageListener , Runnable , ReaderEven
 	        // Look up a JMS connection factory
 	        TopicConnectionFactory conFactory =
 	        (TopicConnectionFactory)jndi.lookup("TopicConnectionFactory");
-	
+	        
 	        
 	        // Create a JMS connection
 	        TopicConnection connection =
 	        conFactory.createTopicConnection();	 
 	
-	        // Create two JMS session objects
-	        TopicSession pubSession =
-	        connection.createTopicSession(false,
-	                                      Session.AUTO_ACKNOWLEDGE);
-	        TopicSession subSession =
-	        connection.createTopicSession(false,
-	                                      Session.AUTO_ACKNOWLEDGE);
-			
-	        // Create a JMS publisher and subscriber
-	//        TopicPublisher publisher = 
-	//            pubSession.createPublisher(chatTopic);
-	//        TopicSubscriber subscriber = 
-	//            subSession.createSubscriber(chatTopic);
-	
-	        // Set a JMS message listener
-	       // subscriber.setMessageListener(this);
 	
 	        // Intialize the Chat application
-	        set(connection, pubSession, subSession, publisher);
+	        set(connection, pubSession, subSession);
 			
 	        connection.start();
 		}
@@ -76,20 +58,21 @@ public class Reader implements javax.jms.MessageListener , Runnable , ReaderEven
         
 	}
 	 /* Initialize the instance variables */
-    public void set(TopicConnection con, TopicSession pubSess,
-                    TopicSession subSess, TopicPublisher pub) {
+    public void set(TopicConnection con, TopicSession pubSess, TopicSession subSess) {
         this.connection = con;
         this.pubSession = pubSess;
         this.subSession = subSess;
-        this.publisher = pub;
     }
 
 	public void onMessage(Message message) {
 		try {
-            TextMessage textMessage = (TextMessage) message;
-            String text = textMessage.getText( );
-            System.out.println(text);
-        } catch (JMSException jmse){ jmse.printStackTrace( ); }
+			ObjectMessage messageObj = (ObjectMessage) message;
+			News NewsItem = (News) messageObj.getObject();
+            
+            System.out.println(NewsItem);
+            // TODO Send to ui
+        
+		} catch (JMSException jmse){ jmse.printStackTrace( ); }
 		
 	}
 	
@@ -97,25 +80,43 @@ public class Reader implements javax.jms.MessageListener , Runnable , ReaderEven
     public void close( ) throws JMSException {
         connection.close( );
     }
+        
+    public void subscribeRequest(String wantedTopic){		
+        // Create a JMS publisher and subscriber
+    	try{
+    		// Create two JMS session objects
+    		TopicSession subSession =
+    				connection.createTopicSession(false,
+    						Session.AUTO_ACKNOWLEDGE);
+    		
+			TopicSubscriber subscriber = 
+				subSession.createSubscriber(subSession.createTopic(wantedTopic));
+
+			// Set a JMS message listener
+			subscriber.setMessageListener(this);
+    	}
+    	catch(JMSException e){
+    		e.printStackTrace();
+    	}
+    }
     
-    /* Create and send message using topic publisher */
-    protected void writeMessage(String text) throws JMSException {
-        TextMessage message = pubSession.createTextMessage( );
-        message.setText(text);
-        publisher.publish(message);
+    public void seen(News NewsItem){
+    	try{
+    		TopicSession pubSession =
+    				connection.createTopicSession(false,
+    						Session.AUTO_ACKNOWLEDGE);    	
+			TopicPublisher publisher = 
+				pubSession.createPublisher(pubSession.createTopic("newsitem:" + NewsItem.getId()));
+			
+			publisher.publish(pubSession.createObjectMessage(NewsItem));	
+    	}
+    	catch(JMSException e){
+    		e.printStackTrace();
+    	}
+
     }
 
-	@Override
-	public void seen(News n) {
-	System.out.println("S");
-		
-	}
-
-	@Override
-	public void subscribeRequest(String s) {
-		// stringul vine gata creat de tip "x : y"
-		System.out.println("R");
-	}
 }
+
 
 
