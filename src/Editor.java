@@ -13,7 +13,7 @@ public class Editor implements Runnable {
     	 new Thread( this ).start();
     }
 
-	@Override
+	
 	public void run()
 	{ 
 	
