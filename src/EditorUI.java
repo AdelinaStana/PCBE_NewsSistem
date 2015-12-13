@@ -53,6 +53,7 @@ private static JPanel initOptionsPane() {
      JButton editButton = new JButton("Edit this topic...");
      JButton followButton = new JButton("Follow");
      JButton newButton = new JButton("New");
+     JButton deleteButton = new JButton("Delete");
      
      editButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
@@ -105,6 +106,7 @@ private static JPanel initOptionsPane() {
         	 }
         }
        });
+     
      followButton.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
         	 News selected = listNews.getSelectedValue();
@@ -161,8 +163,21 @@ newButton.addActionListener(new ActionListener() {
    	 
   });
 
-   
+  deleteButton.addActionListener(new ActionListener() {
+    public void actionPerformed(ActionEvent e) {
+   	 News selected = listNews.getSelectedValue();
+   	 if(selected!=null)
+   	 {
+   		 //more...
+   	 JOptionPane.showMessageDialog(null, "Done!");
+   	 }
+   	 else
+   		 JOptionPane.showMessageDialog(null, "Select something!");
+   	 
+    }
+  });   
      
+
      JPanel panel = new JPanel(new BorderLayout());
      panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -175,6 +190,7 @@ newButton.addActionListener(new ActionListener() {
      pane.add(editButton, BorderLayout.WEST);
      pane.add(followButton, BorderLayout.EAST);
      pane.add(newButton);
+     pane.add(deleteButton);
      
      optionsPane.add(pane);
      optionsPane.setPreferredSize(new Dimension(500,500));

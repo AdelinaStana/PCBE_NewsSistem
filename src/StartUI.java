@@ -1,10 +1,10 @@
 import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
+
+
 public class StartUI
 {
    public static String name = "Enter name here ...";
@@ -58,7 +58,7 @@ public class StartUI
                   }
             }
          };
-         
+      ButtonGroup bg = new ButtonGroup();   
       rOption = new JRadioButton("Reader   ", true);
       rOption.setMnemonic(KeyEvent.VK_H);
       rOption.setActionCommand("reader");
@@ -69,6 +69,8 @@ public class StartUI
       eOption.setActionCommand("editor");
       eOption.addActionListener(buttonListener);
       eOption.setOpaque(false);
+      bg.add(rOption);
+      bg.add(eOption);
       pane = new JPanel(new GridLayout(1, 2));
       pane.add(rOption);
       pane.add(eOption);
