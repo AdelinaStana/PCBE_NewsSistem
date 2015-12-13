@@ -17,6 +17,7 @@ public class EditorUI
    public static boolean connect = false;
    
    public final static EditorUI jchat = new EditorUI(name);
+   static DefaultListModel<News> model = new DefaultListModel<>();;
 
    public static JFrame mainFrame =null;
    public static JTextField statusColor = null;
@@ -99,7 +100,7 @@ private static JPanel initOptionsPane() {
             	 switch (result) {
             	     case JOptionPane.OK_OPTION:
                          News news = new News(field1.getText(),field2.getText(),field3.getText(),name,field4.getText(),field5.getText());
-            	        
+            	        model.addElement(news);
                          break;
             	 }
             	 
@@ -155,7 +156,7 @@ newButton.addActionListener(new ActionListener() {
     	 switch (result) {
     	     case JOptionPane.OK_OPTION:
                  News news = new News(field1.getText(),field2.getText(),field3.getText(),name,field4.getText(),field5.getText());
-    	        
+                 model.addElement(news);
                  break;
     	 }
     	 
@@ -200,9 +201,8 @@ newButton.addActionListener(new ActionListener() {
      return optionsPane;
    }
 
-private static JList<News> createNewsList() {
+public static JList<News> createNewsList() {
     // create List model
-    DefaultListModel<News> model = new DefaultListModel<>();
     // add item to model
     model.addElement(new News("A", "A", "cpp","A",  "cpp","a"));
     model.addElement(new News("A", "A", "cpp","A", "V","a"));
