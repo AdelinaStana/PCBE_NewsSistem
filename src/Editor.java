@@ -2,7 +2,7 @@ import java.io.*;
 import java.net.*;
 
 
-public class Editor implements Runnable {
+public class Editor implements Runnable, CustomeEventListener {
 
     private EditorUI edtUI ;
     private String name;
@@ -20,6 +20,7 @@ public class Editor implements Runnable {
 		edtUI = new EditorUI(name);
 		edtUI.start();
 		
+		edtUI.addListener(this);
 		  
 	     while (edtUI.getConnectionStatus()) 
 			{  
@@ -33,6 +34,35 @@ public class Editor implements Runnable {
 	
 
 	}
+
+
+
+	public void newsAdded(News n) {
+		
+		System.out.println("a");
+	}
+
+
+	@Override
+	public void newsDeleted(News n) {
+		System.out.println("d");
+		
+	}
+
+
+	@Override
+	public void newsEdited(News n ) {
+
+		System.out.println("e");
+	}
+
+
+	@Override
+	public void followRequest(String s) {
+		System.out.println("f");
+	}
+	
+	
 }
 
 

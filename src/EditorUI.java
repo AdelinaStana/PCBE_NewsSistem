@@ -1,15 +1,32 @@
 
-import java.awt.*;
-import java.awt.event.*;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
+
 
 public class EditorUI
 {
@@ -25,14 +42,41 @@ public class EditorUI
    public static JTextField nameField = null;;
    public static JButton connectButton = null;
    private static JList<News> listNews;
+   private static List<CustomeEventListener> listeners;
 
 
    public EditorUI(String name)
    {
     this.name = name ;
-	 
+   listeners = new ArrayList<CustomeEventListener>(); 
    }
 
+   public void addListener(CustomeEventListener toAdd) {
+       listeners.add(toAdd);
+   }
+
+   public static void notifyAdd(News n) {
+   
+       for (CustomeEventListener hl : listeners)
+           hl.newsAdded(n);
+   }
+   
+   public static void notifyEdited(News n) {
+
+       for (CustomeEventListener hl : listeners)
+           hl.newsEdited(n);
+   }
+   
+	private static void notifyFollow(String string) {
+		for (CustomeEventListener hl : listeners)
+	           hl.followRequest(string);
+	}
+	
+	private static void notifyDeleted(News n) {
+		for (CustomeEventListener hl : listeners)
+	           hl.newsDeleted(n);
+	}
+	
 private static JPanel initOptionsPane() {
 	 JPanel pane = null;
      JPanel pane1 = null;
@@ -108,6 +152,7 @@ private static JPanel initOptionsPane() {
                          int index = listNews.getSelectedIndex();
                          ((DefaultListModel) listNews.getModel()).remove(index);
                          model.add(index, news);
+                         notifyEdited(news);
                          break;
             	 }
             	 
@@ -120,12 +165,14 @@ private static JPanel initOptionsPane() {
         	 News selected = listNews.getSelectedValue();
         	 if(selected!=null)
         	 {
+        	 notifyFollow("");	 
         	 JOptionPane.showMessageDialog(null, "Done!");
         	 }
         	 else
         		 JOptionPane.showMessageDialog(null, "Select something!");
         	 
          }
+
        });
 
 newButton.addActionListener(new ActionListener() {
@@ -170,6 +217,7 @@ newButton.addActionListener(new ActionListener() {
     	     case JOptionPane.OK_OPTION:
                  News news = new News(field1.getText(),field2.getText(),field3.getText(),name,field5.getText(),field6.getText());
                  model.addElement(news);
+                 notifyAdd(news);
                  break;
     	 }
     	 
@@ -183,6 +231,7 @@ newButton.addActionListener(new ActionListener() {
    	 if(selected!=null)
    	 {
      int index = listNews.getSelectedIndex();
+   	 notifyDeleted(selected);
      ((DefaultListModel) listNews.getModel()).remove(index);
    	 JOptionPane.showMessageDialog(null, "Done!");
    	 }
