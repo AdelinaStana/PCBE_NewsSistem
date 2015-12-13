@@ -57,7 +57,8 @@ public class Reader implements javax.jms.MessageListener , Runnable , ReaderEven
 
         
 	}
-	 /* Initialize the instance variables */
+
+	/* Initialize the instance variables */
     public void set(TopicConnection con, TopicSession pubSess, TopicSession subSess) {
         this.connection = con;
         this.pubSession = pubSess;
@@ -106,7 +107,7 @@ public class Reader implements javax.jms.MessageListener , Runnable , ReaderEven
     				connection.createTopicSession(false,
     						Session.AUTO_ACKNOWLEDGE);    	
 			TopicPublisher publisher = 
-				pubSession.createPublisher(pubSession.createTopic("newsitem:" + NewsItem.getId()));
+				pubSession.createPublisher(pubSession.createTopic("seen:" + NewsItem.getId()));
 			
 			publisher.publish(pubSession.createObjectMessage(NewsItem));	
     	}
