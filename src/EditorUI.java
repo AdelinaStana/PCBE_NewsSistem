@@ -105,7 +105,9 @@ private static JPanel initOptionsPane() {
             	     case JOptionPane.OK_OPTION:
                          News news = new News(field1.getText(),field2.getText(),field3.getText(),name,field5.getText(),field6.getText());
                          news.setDateCreated(d);
-                         model.addElement(news);
+                         int index = listNews.getSelectedIndex();
+                         ((DefaultListModel) listNews.getModel()).remove(index);
+                         model.add(index, news);
                          break;
             	 }
             	 
