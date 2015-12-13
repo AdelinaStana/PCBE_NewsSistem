@@ -145,6 +145,7 @@ private static JPanel initOptionsPane() {
             	 fields.add(lb6);
             	 fields.add(field6);
             	 int result = JOptionPane.showConfirmDialog(null, fields, "Edit Topic", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+            	 if(!(field1.getText().isEmpty()) && !(field2.getText().isEmpty()) && !(field3.getText().isEmpty()) && !(field5.getText().isEmpty()) && !(field6.getText().isEmpty())){
             	 switch (result) {
             	     case JOptionPane.OK_OPTION:
                          News news = new News(field1.getText(),field2.getText(),field3.getText(),name,field5.getText(),field6.getText());
@@ -155,7 +156,9 @@ private static JPanel initOptionsPane() {
                          notifyEdited(news);
                          break;
             	 }
-            	 
+        	 }
+        	 else
+        		 JOptionPane.showMessageDialog(null, "Not enought arguments!");
         	 }
         }
        });
@@ -212,7 +215,11 @@ newButton.addActionListener(new ActionListener() {
     	 fields.add(field5);
     	 fields.add(lb6);
     	 fields.add(field6);
+    	 
+    	 System.out.println("*"+field1.getText().isEmpty()+"*");
     	 int result = JOptionPane.showConfirmDialog(null, fields, "Edit Topic", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+    	 if(!(field1.getText().isEmpty()) && !(field2.getText().isEmpty()) && !(field3.getText().isEmpty()) && !(field5.getText().isEmpty()) && !(field6.getText().isEmpty())){
+    	 
     	 switch (result) {
     	     case JOptionPane.OK_OPTION:
                  News news = new News(field1.getText(),field2.getText(),field3.getText(),name,field5.getText(),field6.getText());
@@ -220,6 +227,9 @@ newButton.addActionListener(new ActionListener() {
                  notifyAdd(news);
                  break;
     	 }
+    	 }
+    	 else
+    		 JOptionPane.showMessageDialog(null, "Not enought arguments!");
     	 
      }
    	 
