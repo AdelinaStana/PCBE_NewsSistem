@@ -25,13 +25,10 @@ public class Reader implements javax.jms.MessageListener , Runnable {
 	
 		ReaderUI rdrUI = new ReaderUI();
 		rdrUI.start();
-		System.getProperties().put("java.naming.factory.initial","weblogic.jndi.WLInitialContextFactory"); 
-		System.getProperties().put("java.naming.provider.url", "t3://localhost:80");
-		
-		Properties env = new Properties( );
+
+		Properties env = new Properties();
         // ... specify the JNDI properties specific to the vendor
 		
-
         InitialContext jndi;
         
 		try {
