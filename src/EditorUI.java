@@ -82,9 +82,6 @@ public class EditorUI
 	
 private static JPanel initOptionsPane() {
 	 JPanel pane = null;
-     JPanel pane1 = null;
-     ActionAdapter buttonListener = null;
-
      // Create an options pane
      JPanel optionsPane = new JPanel();
      
@@ -155,7 +152,7 @@ private static JPanel initOptionsPane() {
                          news.setDateCreated(d);
                          int index = listNews.getSelectedIndex();
                          ((DefaultListModel) listNews.getModel()).remove(index);
-                         ((Container) model).add(index, news);
+                        ((DefaultListModel<EditorNews>) model).add(index, news);
                          notifyEdited(news);
                          break;
             	 }
