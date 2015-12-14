@@ -82,18 +82,19 @@ public class Editor implements javax.jms.MessageListener, Runnable, EditorEvents
     	try{
     		TopicSession pubSession =
     				connection.createTopicSession(false,
-    						Session.AUTO_ACKNOWLEDGE);    	
+    						Session.AUTO_ACKNOWLEDGE);
+    		
 			pubSession.createPublisher(pubSession.createTopic("id:" + n.getId()))
 			.publish(pubSession.createObjectMessage(n));
-    		pubSession.createPublisher(pubSession.createTopic("autor:" + n.getAuthor()))
+    		pubSession.createPublisher(pubSession.createTopic("Author:" + n.getAuthor()))
 			.publish(pubSession.createObjectMessage(n));	
-			pubSession.createPublisher(pubSession.createTopic("domeniu:" + n.getDomain()))
+			pubSession.createPublisher(pubSession.createTopic("Domain:" + n.getDomain()))
 			.publish(pubSession.createObjectMessage(n));
-			pubSession.createPublisher(pubSession.createTopic("subdomeniu:" + n.getSubdomain()))
+			pubSession.createPublisher(pubSession.createTopic("Subdomain:" + n.getSubdomain()))
 			.publish(pubSession.createObjectMessage(n));
-			pubSession.createPublisher(pubSession.createTopic("sursa:" + n.getSource()))
+			pubSession.createPublisher(pubSession.createTopic("Source:" + n.getSource()))
 			.publish(pubSession.createObjectMessage(n));
-			pubSession.createPublisher(pubSession.createTopic("titlu:" + n.getTitle()))
+			pubSession.createPublisher(pubSession.createTopic("Title:" + n.getTitle()))
 			.publish(pubSession.createObjectMessage(n));    	
     	}
     	catch(JMSException e){
