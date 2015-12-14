@@ -133,15 +133,14 @@ public class Editor implements javax.jms.MessageListener, Runnable, EditorEvents
 	
 
 	public void onMessage(Message message) {
-	public void followRequest(long s) {
-		
-			String textMessage = messageObj.getText();
+		try{
+			String textMessage = (String) ((TextMessage) message).getText();
             
 			String textMessageType = textMessage.split(":")[0];
 			String textMessageValue = textMessage.split(":")[1];
 			
 			if(textMessageType == "seen"){
-				System.out.println(textMessage);
+				System.out.println(textMessageValue);
 			}
             // TODO Send to ui
         

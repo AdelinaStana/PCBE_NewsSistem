@@ -79,7 +79,7 @@ public class News implements Serializable{
 		return this.content;
 	}
 
-	public String getId() {
-		return this.content;
+	public long getId() {
+		return this.id;
 	}
 }
