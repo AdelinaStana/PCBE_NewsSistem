@@ -27,7 +27,8 @@ public class Editor implements javax.jms.MessageListener, Runnable, EditorEvents
     
     public Editor(String name) { 
     	 this.name = name;
-    	 new Thread( this ).start();
+//    	 new Thread( this ).start();
+    	 run();
     }
 
 	

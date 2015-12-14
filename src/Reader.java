@@ -14,7 +14,8 @@ public class Reader implements javax.jms.MessageListener , Runnable , ReaderEven
     private TopicConnection connection;
     
     public Reader() { 
-    	 new Thread( this ).start();
+//    	 new Thread( this ).start();
+    	run();
     }
 
 	public void run()
