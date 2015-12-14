@@ -112,7 +112,7 @@ public class Editor implements javax.jms.MessageListener, Runnable, EditorEvents
 		newsAdded(n);
 	}
 
-	@Override
+		
 	public void followRequest(long id) {
 
 		try {
@@ -133,8 +133,8 @@ public class Editor implements javax.jms.MessageListener, Runnable, EditorEvents
 	
 
 	public void onMessage(Message message) {
-		try {
-			TextMessage messageObj = (TextMessage) message;
+	public void followRequest(long s) {
+		
 			String textMessage = messageObj.getText();
             
 			String textMessageType = textMessage.split(":")[0];

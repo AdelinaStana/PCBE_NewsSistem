@@ -70,9 +70,9 @@ public class EditorUI
            hl.newsEdited(n);
    }
    
-	private static void notifyFollow(String string) {
+	private static void notifyFollow(long l) {
 		for (EditorEvents hl : listeners)
-	           hl.followRequest(string);
+	           hl.followRequest(l);
 	}
 	
 	private static void notifyDeleted(EditorNews n) {
@@ -168,7 +168,7 @@ private static JPanel initOptionsPane() {
         	 EditorNews selected = listNews.getSelectedValue();
         	 if(selected!=null)
         	 {
-        	 notifyFollow("");	 
+        	 notifyFollow(selected.getId());	 
         	 JOptionPane.showMessageDialog(null, "Done!");
         	 }
         	 else
