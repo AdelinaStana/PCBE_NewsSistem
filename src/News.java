@@ -15,6 +15,7 @@ public class News implements Serializable{
     private Date dateModified;
     private String title;
     private String content;
+    private boolean deleted = false;
     
  
     public News(String domeniu, String subdomeniu, String sursa,String autor,String titlu , String continut) {
