@@ -105,6 +105,7 @@ public class Editor implements javax.jms.MessageListener, Runnable, EditorEvents
 
 	@Override
 	public void newsDeleted(News n) {
+		n.setDeleted();
 		newsAdded(n);
 	}
 
