@@ -26,6 +26,8 @@ public class ReaderUI
    private static JList<News> listNews;
    private static List<ReaderEvents> listeners;
 
+   static DefaultListModel<News> model = new DefaultListModel<>();
+
    public ReaderUI()
    {
 
@@ -126,8 +128,7 @@ private static JPanel initOptionsPane() {
    }
 
 private static JList<News> createNewsList() {
-    // create List model
-    DefaultListModel<News> model = new DefaultListModel<>();
+
     // add item to model
     model.addElement(new News("A", "A", "cpp","A",  "cpp","a"));
     model.addElement(new News("A", "A", "cpp","A", "V","a"));
@@ -189,6 +190,49 @@ public void start()
 
       initGUI();
 
+}
+
+public void process(News newsItem)
+{
+	if(newsItem.getDeleted())
+	{
+		int n = model.getSize();
+		for(int i=0;i<=n;i++)
+		{
+			News news =  model.getElementAt(i);
+			if(newsItem.getId()==news.getId())
+			{
+				model.remove(i);
+			}
+		}
+	}
+	else
+	{
+		int n = model.getSize();
+		boolean found = false;
+		int index = 0 ;
+		for(int i=0;i<n;i++)
+		{
+			News news =  model.getElementAt(i);
+			if(newsItem.getId()==news.getId())
+			{
+				found = true;
+				index = i;
+			}
+		}
+		
+		if(found)
+		{
+			model.remove(index);
+			model.insertElementAt(newsItem, index);
+		}
+		else
+		{
+			model.add(model.getSize(), newsItem);
+		}
+			
+	}
+	
 }
 
 }

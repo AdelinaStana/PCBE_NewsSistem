@@ -79,6 +79,9 @@ public class News implements Serializable{
 	public String getContent() {
 		return this.content;
 	}
+	public boolean getDeleted() {
+		return this.deleted;
+	}
 
 	public long getId() {
 		return this.id;

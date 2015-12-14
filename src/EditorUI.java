@@ -173,7 +173,6 @@ private static JPanel initOptionsPane() {
         	 }
         	 else
         		 JOptionPane.showMessageDialog(null, "Select something!");
-        	 
          }
 
        });

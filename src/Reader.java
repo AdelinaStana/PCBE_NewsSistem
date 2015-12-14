@@ -70,9 +70,8 @@ public class Reader implements javax.jms.MessageListener , Runnable , ReaderEven
 		try {
 			ObjectMessage messageObj = (ObjectMessage) message;
 			News NewsItem = (News) messageObj.getObject();
-            
-            System.out.println(NewsItem.getContent());
-            // TODO Send to ui
+            rdrUI.process(NewsItem);
+            System.out.println("SSSASS"+NewsItem.getContent());
         
 		} catch (JMSException jmse){ jmse.printStackTrace( ); }
 		
