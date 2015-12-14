@@ -21,7 +21,7 @@ public class Reader implements javax.jms.MessageListener , Runnable , ReaderEven
 	public void run()
 	{ 
 	
-		ReaderUI rdrUI = new ReaderUI();
+		rdrUI = new ReaderUI();
 		rdrUI.start();
 
 		rdrUI.addListener(this);
@@ -70,8 +70,7 @@ public class Reader implements javax.jms.MessageListener , Runnable , ReaderEven
 		try {
 			ObjectMessage messageObj = (ObjectMessage) message;
 			News NewsItem = (News) messageObj.getObject();
-            rdrUI.process(NewsItem);
-            System.out.println("SSSASS"+NewsItem.getContent());
+            this.rdrUI.process(NewsItem);
         
 		} catch (JMSException jmse){ jmse.printStackTrace( ); }
 		

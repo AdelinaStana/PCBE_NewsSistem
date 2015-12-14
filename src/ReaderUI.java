@@ -194,10 +194,11 @@ public void start()
 
 public void process(News newsItem)
 {
+
 	if(newsItem.getDeleted())
 	{
 		int n = model.getSize();
-		for(int i=0;i<=n;i++)
+		for(int i=0;i<n;i++)
 		{
 			News news =  model.getElementAt(i);
 			if(newsItem.getId()==news.getId())
