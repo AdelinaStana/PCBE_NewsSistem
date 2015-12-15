@@ -128,10 +128,6 @@ private static JPanel initOptionsPane() {
    }
 
 private static JList<News> createNewsList() {
-
-    // add item to model
-    model.addElement(new News("A", "A", "cpp","A",  "cpp","a"));
-    model.addElement(new News("A", "A", "cpp","A", "V","a"));
    
     // create JList with model
     JList<News> list = new JList<News>(model);

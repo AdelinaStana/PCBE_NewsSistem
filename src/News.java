@@ -16,6 +16,7 @@ public class News implements Serializable{
     private String title;
     private String content;
     private boolean deleted = false;
+    private int views = 0;
     
  
     public News(String domeniu, String subdomeniu, String sursa,String autor,String titlu , String continut) {
@@ -91,4 +92,15 @@ public class News implements Serializable{
 	public long getId() {
 		return this.id;
 	}
+	
+	public void increment()
+	{
+		this.views = this.views + 1 ;
+	}
+	
+	public int getViews() {
+		return this.views;
+	}
+	
+	
 }

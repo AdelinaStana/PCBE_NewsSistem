@@ -215,7 +215,6 @@ newButton.addActionListener(new ActionListener() {
     	 fields.add(lb6);
     	 fields.add(field6);
     	 
-    	 System.out.println("*"+field1.getText().isEmpty()+"*");
     	 int result = JOptionPane.showConfirmDialog(null, fields, "Edit Topic", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
     	 if(!(field1.getText().isEmpty()) && !(field2.getText().isEmpty()) && !(field3.getText().isEmpty()) && !(field5.getText().isEmpty()) && !(field6.getText().isEmpty())){
     	 
@@ -274,15 +273,10 @@ newButton.addActionListener(new ActionListener() {
    }
 
 public static JList<EditorNews> createNewsList() {
-    // create List model
-    // add item to model
-    ((DefaultListModel<EditorNews>) model).addElement(new EditorNews("A", "A", "cpp","A",  "cpp","a"));
-    ((DefaultListModel<EditorNews>) model).addElement(new EditorNews("A", "A", "cpp","A", "V","a"));
-
+   
     // create JList with model
     JList<EditorNews> list = new JList<EditorNews>(model);
     list.setCellRenderer(new NewsRenderer());
-    
     return list;
 }
 
@@ -337,6 +331,25 @@ public void start()
       initGUI();
 
 }
+
+public void incrementViews(long idd) {
+
+	int n = model.getSize();
+	for(int i=0;i<n;i++)
+	{
+		EditorNews news =  model.getElementAt(i);
+		
+		if(idd==news.getId())
+		{
+		((DefaultListModel<EditorNews>)model).remove(i);
+		news.increment();
+		((DefaultListModel<EditorNews>)model).insertElementAt(news, i);
+		}
+	}
+	
+}
+
+
 
 }
 

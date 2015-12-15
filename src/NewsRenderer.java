@@ -23,11 +23,13 @@ public class NewsRenderer extends JPanel implements ListCellRenderer<News> {
     private JLabel lbTitlu = new JLabel();
     private JLabel lbDataCreated= new JLabel();
     private JLabel lbDataModified= new JLabel();
+    private JLabel lbViews = new JLabel();
+    private JPanel panelText ;
  
     public NewsRenderer() {
         setLayout(new BorderLayout(5, 5));
  
-        JPanel panelText = new JPanel(new GridLayout(0, 1));
+        panelText = new JPanel(new GridLayout(0, 1));
         panelText.add(lbDomeniu);
         panelText.add(lbSubdomeniu);
         panelText.add(lbSursa);
@@ -42,6 +44,9 @@ public class NewsRenderer extends JPanel implements ListCellRenderer<News> {
     @Override
     public Component getListCellRendererComponent(JList<? extends News> list,
             News news, int index, boolean isSelected, boolean cellHasFocus) {
+    	
+    	if(news.getViews()>0)
+    		panelText.add(lbViews);
  
         lbIcon.setIcon(new ImageIcon(news.getIconName() + ".jpg"));
         lbDomeniu.setText("Domeniu : "+news.getDomain());
@@ -53,6 +58,19 @@ public class NewsRenderer extends JPanel implements ListCellRenderer<News> {
         lbDataModified.setText("Data modificarii: "+news.getDateModified());
         lbTitlu.setText("Titlul : "+news.getTitle());
         lbTitlu.setForeground(Color.blue);
+        if(news.getViews()>0){
+        	
+        	StringBuilder sb = new StringBuilder();
+        	sb.append("");
+        	sb.append(news.getViews());
+        	String strI = sb.toString();
+        	lbViews.setText(strI);
+        	lbViews.setForeground(Color.orange);
+        	lbViews.setOpaque(true);
+        }
+        else
+        	lbViews.setForeground(Color.WHITE);
+    		
         
      // set Opaque to change background color of JLabel
         lbDomeniu.setOpaque(true);
@@ -72,6 +90,9 @@ public class NewsRenderer extends JPanel implements ListCellRenderer<News> {
             lbDataModified.setBackground(list.getSelectionBackground());
             lbTitlu.setBackground(list.getSelectionBackground());
             lbIcon.setBackground(list.getSelectionBackground());
+            if(news.getViews()>0){
+            	lbViews.setBackground(Color.white);
+            }
             setBackground(list.getSelectionBackground());
         } else { // when don't select
         	lbDomeniu.setBackground(list.getBackground());
@@ -82,6 +103,9 @@ public class NewsRenderer extends JPanel implements ListCellRenderer<News> {
             lbDataModified.setBackground(list.getBackground());
             lbTitlu.setBackground(list.getBackground());
             lbIcon.setBackground(list.getBackground());
+            if(news.getViews()>0){
+            	lbViews.setBackground(Color.white);
+            }
             setBackground(list.getBackground());
         }
  
