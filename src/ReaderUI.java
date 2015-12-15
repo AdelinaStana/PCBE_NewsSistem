@@ -128,10 +128,6 @@ private static JPanel initOptionsPane() {
    }
 
 private static JList<News> createNewsList() {
-
-    // add item to model
-    model.addElement(new News("A", "A", "cpp","A",  "cpp","a"));
-    model.addElement(new News("A", "A", "cpp","A", "V","a"));
    
     // create JList with model
     JList<News> list = new JList<News>(model);
@@ -212,9 +208,12 @@ public void process(News newsItem)
 		int n = model.getSize();
 		boolean found = false;
 		int index = 0 ;
+		
 		for(int i=0;i<n;i++)
 		{
 			News news =  model.getElementAt(i);
+			System.out.println(news.getId());
+			System.out.println(newsItem.getId());
 			if(newsItem.getId()==news.getId())
 			{
 				found = true;

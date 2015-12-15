@@ -35,10 +35,10 @@ public class Editor implements javax.jms.MessageListener, Runnable, EditorEvents
 	public void run()
 	{ 
 	
-		edtUI = new EditorUI(name);
-		edtUI.start();
+		this.edtUI = new EditorUI(name);
+		this.edtUI.start();
 		
-		edtUI.addListener(this);
+		this.edtUI.addListener(this);
 
 		InitialContext jndi;
 		
@@ -137,15 +137,10 @@ public class Editor implements javax.jms.MessageListener, Runnable, EditorEvents
 
 	public void onMessage(Message message) {
 		try{
-			String textMessage = (String) ((TextMessage) message).getText();
-            
-			String textMessageType = textMessage.split(":")[0];
-			String textMessageValue = textMessage.split(":")[1];
+			ObjectMessage messageObj = (ObjectMessage) message;
+			News NewsItem = (News) messageObj.getObject();
 			
-			if(textMessageType == "seen"){
-				System.out.println(textMessageValue);
-			}
-            // TODO Send to ui
+				this.edtUI.incrementViews(NewsItem.getId());
         
 		} catch (JMSException jmse){ jmse.printStackTrace( ); }
 		
