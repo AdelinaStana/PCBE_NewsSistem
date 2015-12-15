@@ -341,7 +341,7 @@ public void incrementViews(long idd) {
 		EditorNews news =  model.getElementAt(i);
 		
 		if(idd==news.getId())
-		{	
+		{
 		((DefaultListModel<EditorNews>)model).remove(i);
 		news.increment();
 		((DefaultListModel<EditorNews>)model).insertElementAt(news, i);
